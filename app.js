@@ -7,12 +7,19 @@ const filter = document.querySelector('#filter');
 const taskInput = document.querySelector('#task');
 
 // load all event listners
-loadEventListners();
+loadEventListeners();
 
 // load all event listners
-function loadEventListners() {
+function loadEventListeners() {
     // Add task Event
     form.addEventListener('submit', addTask);
+    //remove task Event
+    taskList.addEventListener('click', removeTask);
+    //clear Task Events
+    clearBtn.addEventListener('click', clearTasks );
+
+    // filter tasks
+    filter.addEventListener('keyup', filterTasks);
 
 }
 
@@ -52,5 +59,41 @@ function addTask(e) {
 
 
 
+
     e.preventDefault();
+}
+
+ //remove Task
+ function removeTask(e) {
+     if(e.target.parentElement.classList.contains('delete-item')){
+         if(confirm('Are You Sure?')){
+    e.target.parentElement.parentElement.remove();}
+     }
+}
+
+function clearTasks(e) {
+    // taskList.innerHTML = '';
+
+    //faster
+    if(confirm('Are You Sure')){
+    while(taskList.firstChild){
+        taskList.removeChild(taskList.firstChild);
+    }}
+
+    //https://jsperf.com/innerHTML-vs-removechild
+}
+
+
+function filterTasks(e){
+    const text = e.target.value.toLowerCase();
+        document.querySelectorAll('.collection-item').forEach(
+        function (task) {
+            const item = task.firstChild.textContent;
+
+            if(item.toLowerCase().indexOf(text) != -1 ){
+                task.style.display = 'block';             }
+                else{
+                    task.style.display = 'none';
+                }
+        });
 }
