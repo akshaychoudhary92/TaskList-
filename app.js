@@ -27,7 +27,7 @@ function addTask(e) {
     const li = document.createElement('li');
 
     //add class
-    li.classname = 'collection-item';
+    li.className = 'collection-item';
 
     // create text node and append to the li
     li.appendChild(document.createTextNode(taskInput.value));
